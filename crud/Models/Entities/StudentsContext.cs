@@ -5,18 +5,24 @@ namespace crud.Models.Entities
     public class StudentsContext : DbContext
 
     {
-    
 
 
-    public StudentsContext(DbContextOptions<StudentsContext> options)
-        : base(options)
-    {
+
+        public StudentsContext(DbContextOptions<StudentsContext> options)
+            : base(options)
+        {
+
+        }
+
+
+        public DbSet<Students> Students { get; set; }
+        public DbSet<Classrooms> Classrooms { get; set; }
+        public DbSet<Grades> Grade { get; set; }
+        public DbSet<Subjects> Subject { get; set; }
+        public DbSet<Teachers> Teacher { get; set; }
+        public DbSet<TeachersSchedule> TeacherSchedule { get; set; }
+
 
     }
-
-
-    public DbSet<Students> Students { get; set; }
-
-}
 }
 

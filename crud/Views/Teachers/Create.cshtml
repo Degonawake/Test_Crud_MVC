@@ -1,22 +1,20 @@
-﻿@model crud.Models.Entities.Students
+﻿@model crud.Models.Entities.Teachers
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create new student</h1>
+<h1>Create Teacher</h1>
 
-<h4>Students</h4>
+<h4>Teachers</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form class="form-control bg-light" asp-action="Create">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-            
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName"  class="form-control" />
+                <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -25,19 +23,9 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Birthdate" class="control-label"></label>
-                <input asp-for="Birthdate" class="form-control" />
-                <span asp-validation-for="Birthdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClassroomId" class="control-label"></label>
-                <input asp-for="ClassroomId" class="form-control" />
-                <span asp-validation-for="ClassroomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GradeId" class="control-label"></label>
-                <input asp-for="GradeId" class="form-control" />
-                <span asp-validation-for="GradeId" class="text-danger"></span>
+                <label asp-for="HireDate" class="control-label"></label>
+                <input asp-for="HireDate" class="form-control" />
+                <span asp-validation-for="HireDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

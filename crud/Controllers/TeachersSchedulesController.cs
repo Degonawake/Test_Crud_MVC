@@ -9,111 +9,87 @@ using crud.Models.Entities;
 
 namespace crud.Controllers
 {
-    public class StudentsController : Controller
+    public class TeachersSchedulesController : Controller
     {
         private readonly StudentsContext _context;
-       
 
-
-
-        public StudentsController(StudentsContext context, StudentsContext contextG, StudentsContext contextC)
+        public TeachersSchedulesController(StudentsContext context)
         {
             _context = context;
-           
-
         }
 
-        // GET: Students
+        // GET: TeachersSchedules
         public async Task<IActionResult> Index()
         {
-
-
-            ViewModel viewModel = new ViewModel
-            {
-                students = await _context.Students.ToListAsync(),
-                classrooms = await _context.Classrooms.ToListAsync(),
-                grades = await _context.Grade.ToListAsync()
-
-
-            };
-
-         
-
-            /*return _context.Students != null ? 
-                       View(await _context.Students.ToListAsync()) :
-                       Problem("Entity set 'StudentsContext.Students'  is null.");
-            */
-
-            return _context.Students != null ?
-                        View(new List<ViewModel> { viewModel }) :
-                       Problem("Entity set 'StudentsContext.Students'  is null.");
-
+              return _context.TeacherSchedule != null ? 
+                          View(await _context.TeacherSchedule.ToListAsync()) :
+                          Problem("Entity set 'StudentsContext.TeacherSchedule'  is null.");
         }
 
-        // GET: Students/Details/5
+        // GET: TeachersSchedules/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.TeacherSchedule == null)
             {
                 return NotFound();
             }
 
-            var students = await _context.Students
+            var teachersSchedule = await _context.TeacherSchedule
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (students == null)
+            if (teachersSchedule == null)
             {
                 return NotFound();
             }
 
-            return View(students);
+            return View(teachersSchedule);
         }
 
-        // GET: Students/Create
+        // GET: TeachersSchedules/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: TeachersSchedules/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Birthdate,ClassroomId, GradeId")] Students students)
+        public async Task<IActionResult> Create([Bind("Id,TeacherId,GradeId,SubjectId,ClassroomId,Schedule")] TeachersSchedule teachersSchedule)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(students);
+                _context.Add(teachersSchedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(students);
+            return View(teachersSchedule);
         }
 
-        // GET: Students/Edit/5
+        // GET: TeachersSchedules/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.TeacherSchedule == null)
             {
                 return NotFound();
             }
 
-            var students = await _context.Students.FindAsync(id);
-            if (students == null)
+            var teachersSchedule = await _context.TeacherSchedule.FindAsync(id);
+            if (teachersSchedule == null)
             {
                 return NotFound();
             }
-            return View(students);
+            return View(teachersSchedule);
         }
 
-        // POST: Students/Edit/5
+        // POST: TeachersSchedules/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Birthdate,ClassroomCode")] Students students)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TeacherId,GradeId,SubjectId,ClassroomId,Schedule")] TeachersSchedule teachersSchedule)
         {
-            if (id != students.Id)
+            if (id != teachersSchedule.Id)
             {
                 return NotFound();
             }
@@ -122,12 +98,12 @@ namespace crud.Controllers
             {
                 try
                 {
-                    _context.Update(students);
+                    _context.Update(teachersSchedule);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentsExists(students.Id))
+                    if (!TeachersScheduleExists(teachersSchedule.Id))
                     {
                         return NotFound();
                     }
@@ -138,49 +114,49 @@ namespace crud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(students);
+            return View(teachersSchedule);
         }
 
-        // GET: Students/Delete/5
+        // GET: TeachersSchedules/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.TeacherSchedule == null)
             {
                 return NotFound();
             }
 
-            var students = await _context.Students
+            var teachersSchedule = await _context.TeacherSchedule
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (students == null)
+            if (teachersSchedule == null)
             {
                 return NotFound();
             }
 
-            return View(students);
+            return View(teachersSchedule);
         }
 
-        // POST: Students/Delete/5
+        // POST: TeachersSchedules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Students == null)
+            if (_context.TeacherSchedule == null)
             {
-                return Problem("Entity set 'StudentsContext.Students'  is null.");
+                return Problem("Entity set 'StudentsContext.TeacherSchedule'  is null.");
             }
-            var students = await _context.Students.FindAsync(id);
-            if (students != null)
+            var teachersSchedule = await _context.TeacherSchedule.FindAsync(id);
+            if (teachersSchedule != null)
             {
-                _context.Students.Remove(students);
+                _context.TeacherSchedule.Remove(teachersSchedule);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentsExists(int id)
+        private bool TeachersScheduleExists(int id)
         {
-          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.TeacherSchedule?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

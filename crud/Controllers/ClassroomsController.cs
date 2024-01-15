@@ -9,111 +9,87 @@ using crud.Models.Entities;
 
 namespace crud.Controllers
 {
-    public class StudentsController : Controller
+    public class ClassroomsController : Controller
     {
         private readonly StudentsContext _context;
-       
 
-
-
-        public StudentsController(StudentsContext context, StudentsContext contextG, StudentsContext contextC)
+        public ClassroomsController(StudentsContext context)
         {
             _context = context;
-           
-
         }
 
-        // GET: Students
+        // GET: Classrooms
         public async Task<IActionResult> Index()
         {
-
-
-            ViewModel viewModel = new ViewModel
-            {
-                students = await _context.Students.ToListAsync(),
-                classrooms = await _context.Classrooms.ToListAsync(),
-                grades = await _context.Grade.ToListAsync()
-
-
-            };
-
-         
-
-            /*return _context.Students != null ? 
-                       View(await _context.Students.ToListAsync()) :
-                       Problem("Entity set 'StudentsContext.Students'  is null.");
-            */
-
-            return _context.Students != null ?
-                        View(new List<ViewModel> { viewModel }) :
-                       Problem("Entity set 'StudentsContext.Students'  is null.");
-
+              return _context.Classrooms != null ? 
+                          View(await _context.Classrooms.ToListAsync()) :
+                          Problem("Entity set 'StudentsContext.Classrooms'  is null.");
         }
 
-        // GET: Students/Details/5
+        // GET: Classrooms/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.Classrooms == null)
             {
                 return NotFound();
             }
 
-            var students = await _context.Students
+            var classrooms = await _context.Classrooms
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (students == null)
+            if (classrooms == null)
             {
                 return NotFound();
             }
 
-            return View(students);
+            return View(classrooms);
         }
 
-        // GET: Students/Create
+        // GET: Classrooms/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: Classrooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Birthdate,ClassroomId, GradeId")] Students students)
+        public async Task<IActionResult> Create([Bind("Id,Classroom")] Classrooms classrooms)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(students);
+                _context.Add(classrooms);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(students);
+            return View(classrooms);
         }
 
-        // GET: Students/Edit/5
+        // GET: Classrooms/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.Classrooms == null)
             {
                 return NotFound();
             }
 
-            var students = await _context.Students.FindAsync(id);
-            if (students == null)
+            var classrooms = await _context.Classrooms.FindAsync(id);
+            if (classrooms == null)
             {
                 return NotFound();
             }
-            return View(students);
+            return View(classrooms);
         }
 
-        // POST: Students/Edit/5
+        // POST: Classrooms/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Birthdate,ClassroomCode")] Students students)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Classroom")] Classrooms classrooms)
         {
-            if (id != students.Id)
+            if (id != classrooms.Id)
             {
                 return NotFound();
             }
@@ -122,12 +98,12 @@ namespace crud.Controllers
             {
                 try
                 {
-                    _context.Update(students);
+                    _context.Update(classrooms);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentsExists(students.Id))
+                    if (!ClassroomsExists(classrooms.Id))
                     {
                         return NotFound();
                     }
@@ -138,49 +114,49 @@ namespace crud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(students);
+            return View(classrooms);
         }
 
-        // GET: Students/Delete/5
+        // GET: Classrooms/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.Classrooms == null)
             {
                 return NotFound();
             }
 
-            var students = await _context.Students
+            var classrooms = await _context.Classrooms
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (students == null)
+            if (classrooms == null)
             {
                 return NotFound();
             }
 
-            return View(students);
+            return View(classrooms);
         }
 
-        // POST: Students/Delete/5
+        // POST: Classrooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Students == null)
+            if (_context.Classrooms == null)
             {
-                return Problem("Entity set 'StudentsContext.Students'  is null.");
+                return Problem("Entity set 'StudentsContext.Classrooms'  is null.");
             }
-            var students = await _context.Students.FindAsync(id);
-            if (students != null)
+            var classrooms = await _context.Classrooms.FindAsync(id);
+            if (classrooms != null)
             {
-                _context.Students.Remove(students);
+                _context.Classrooms.Remove(classrooms);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentsExists(int id)
+        private bool ClassroomsExists(int id)
         {
-          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Classrooms?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
