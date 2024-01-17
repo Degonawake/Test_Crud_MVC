@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using crud.Models.Entities;
 
 namespace crud.Models.Entities
 {
@@ -20,7 +21,8 @@ namespace crud.Models.Entities
         public DbSet<Grades> Grade { get; set; }
         public DbSet<Subjects> Subject { get; set; }
         public DbSet<Teachers> Teacher { get; set; }
-        public DbSet<TeachersSchedule> TeacherSchedule { get; set; }
+        public DbSet<TeacherSchedule> TeacherSchedule { get; set; }
+
 
 
     }

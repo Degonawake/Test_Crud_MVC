@@ -9,10 +9,9 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr class="bg-dark text-light">
-           
             <th>
                 First Name
             </th>
@@ -23,47 +22,53 @@
                 Birth Date
             </th>
             <th>
-                Classroom Id
+                Classroom
             </th>
             <th>
-               Grade Id
+                Grade
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-            @foreach (var student in item.students)
-            {
-        <tr>
-               
-            <td>
-                @Html.DisplayFor(modelItem => student.FirstName)
-            </td>
-            <td>
-                        @Html.DisplayFor(modelItem => student.LastName)
-            </td>
-            <td>
-                        @Html.DisplayFor(modelItem => student.Birthdate)
-            </td>
-            <td>
-                        @Html.DisplayFor(modelItem => student.ClassroomId)
-            </td>
-                    @foreach (var classroom in item.classrooms)
-                    {
-                    <td>
-                        @Html.DisplayFor(modelItem => classroom.Classroom)
-                    </td>
-                    }
+        @foreach (var viewModel in Model)
+        {
+            var student = viewModel.students;
+            <tr>
                 <td>
-                        @Html.DisplayFor(modelItem => student.GradeId)
+                    @Html.DisplayFor(modelItem => student.FirstName)
                 </td>
-            <td>
-                        <a class="btn btn-success" asp-action="Edit" asp-route-id="@student.Id">Edit</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
-            </td>
-        </tr>
-}
-}
+                <td>
+                    @Html.DisplayFor(modelItem => student.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.Birthdate)
+                </td>
+                @foreach (var classroom in viewModel.classrooms)
+                {
+                    if (classroom.Id == student.ClassroomId)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => classroom.Classroom)
+                        </td>
+                    }
+                }
+                
+                @foreach (var grade in viewModel.grades)
+                {
+                    if (grade.Id == student.GradeId)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => grade.Grade)
+                        </td>
+                    }
+                }
+                
+                <td>
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@student.Id">Edit</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

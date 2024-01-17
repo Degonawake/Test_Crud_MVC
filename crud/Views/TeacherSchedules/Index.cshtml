@@ -1,25 +1,25 @@
-﻿@model IEnumerable<crud.Models.Entities.TeachersSchedule>
+﻿@model IEnumerable<crud.Models.Entities.TeacherSchedule>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List Teacher Schedules</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New Schedule</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
-        <tr>
+        <tr class="bg-dark text-light">
             <th>
-                Teacher Id
+               Teacher Id
             </th>
             <th>
-               Grade Id
+                Grade Id
             </th>
             <th>
-                Subject Id
+               Subject Id
             </th>
             <th>
                Classroom Id
@@ -49,8 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Schedule)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

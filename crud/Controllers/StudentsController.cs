@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using crud.Models.Entities;
+using System.Diagnostics;
 
 namespace crud.Controllers
 {
@@ -26,52 +27,48 @@ namespace crud.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
+            List<ViewModel> viewModels = new List<ViewModel>();
 
+            var students = await _context.Students.ToListAsync();
+            var classrooms = await _context.Classrooms.ToListAsync();
+            var grades = await _context.Grade.ToListAsync();
 
-            ViewModel viewModel = new ViewModel
+            foreach (var student in students)
             {
-                students = await _context.Students.ToListAsync(),
-                classrooms = await _context.Classrooms.ToListAsync(),
-                grades = await _context.Grade.ToListAsync()
+                ViewModel viewModel = new ViewModel
+                {
+                    students = student,
+                    classrooms = classrooms,
+                    grades = grades
+                };
 
-
-            };
-
-         
-
-            /*return _context.Students != null ? 
-                       View(await _context.Students.ToListAsync()) :
-                       Problem("Entity set 'StudentsContext.Students'  is null.");
-            */
-
-            return _context.Students != null ?
-                        View(new List<ViewModel> { viewModel }) :
-                       Problem("Entity set 'StudentsContext.Students'  is null.");
-
-        }
-
-        // GET: Students/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Students == null)
-            {
-                return NotFound();
+                viewModels.Add(viewModel);
             }
 
-            var students = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (students == null)
-            {
-                return NotFound();
-            }
-
-            return View(students);
+            return View(viewModels);
         }
+
+      
 
         // GET: Students/Create
+    
         public IActionResult Create()
         {
-            return View();
+           
+            ViewModel viewModel = new ViewModel
+            {
+                students = new Students(), 
+                classrooms = new List<Classrooms>(), 
+                grades = new List<Grades>() 
+
+               
+            };
+
+            viewModel.classrooms = _context.Classrooms;
+            viewModel.grades = _context.Grade;
+
+
+            return View(viewModel);
         }
 
         // POST: Students/Create
@@ -79,7 +76,7 @@ namespace crud.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Birthdate,ClassroomId, GradeId")] Students students)
+        public async Task<IActionResult> Create([Bind("Id,FirstName, LastName, Birthdate, ClassroomId, GradeId")] Students students)
         {
             if (ModelState.IsValid)
             {
@@ -98,12 +95,32 @@ namespace crud.Controllers
                 return NotFound();
             }
 
-            var students = await _context.Students.FindAsync(id);
+            /*var students = await _context.Students.FindAsync(id);
             if (students == null)
             {
                 return NotFound();
             }
-            return View(students);
+            return View(students);*/
+
+            var student = await _context.Students
+                               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            ViewModel viewModel = new ViewModel
+            {
+                students = student,
+                classrooms = await _context.Classrooms.ToListAsync(),
+                grades = await _context.Grade.ToListAsync()
+            };
+
+            return View(viewModel);
+
+
+
         }
 
         // POST: Students/Edit/5
@@ -111,7 +128,7 @@ namespace crud.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Birthdate,ClassroomCode")] Students students)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Birthdate,ClassroomId,GradeId")] Students students)
         {
             if (id != students.Id)
             {

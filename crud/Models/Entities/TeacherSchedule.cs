@@ -1,6 +1,6 @@
 ﻿namespace crud.Models.Entities
 {
-    public class TeachersSchedule
+    public class TeacherSchedule
     {
         public int Id { get; set; }
         public int TeacherId { get; set; }
@@ -9,5 +9,4 @@
         public int ClassroomId { get; set; }
         public DateTime Schedule { get; set; }
     }
-   
 }

@@ -9,16 +9,16 @@ using crud.Models.Entities;
 
 namespace crud.Controllers
 {
-    public class TeachersSchedulesController : Controller
+    public class TeacherSchedulesController : Controller
     {
         private readonly StudentsContext _context;
 
-        public TeachersSchedulesController(StudentsContext context)
+        public TeacherSchedulesController(StudentsContext context)
         {
             _context = context;
         }
 
-        // GET: TeachersSchedules
+        // GET: TeacherSchedules
         public async Task<IActionResult> Index()
         {
               return _context.TeacherSchedule != null ? 
@@ -26,7 +26,7 @@ namespace crud.Controllers
                           Problem("Entity set 'StudentsContext.TeacherSchedule'  is null.");
         }
 
-        // GET: TeachersSchedules/Details/5
+        // GET: TeacherSchedules/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.TeacherSchedule == null)
@@ -34,39 +34,39 @@ namespace crud.Controllers
                 return NotFound();
             }
 
-            var teachersSchedule = await _context.TeacherSchedule
+            var teacherSchedule = await _context.TeacherSchedule
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (teachersSchedule == null)
+            if (teacherSchedule == null)
             {
                 return NotFound();
             }
 
-            return View(teachersSchedule);
+            return View(teacherSchedule);
         }
 
-        // GET: TeachersSchedules/Create
+        // GET: TeacherSchedules/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TeachersSchedules/Create
+        // POST: TeacherSchedules/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TeacherId,GradeId,SubjectId,ClassroomId,Schedule")] TeachersSchedule teachersSchedule)
+        public async Task<IActionResult> Create([Bind("Id,TeacherId,GradeId,SubjectId,ClassroomId,Schedule")] TeacherSchedule teacherSchedule)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(teachersSchedule);
+                _context.Add(teacherSchedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(teachersSchedule);
+            return View(teacherSchedule);
         }
 
-        // GET: TeachersSchedules/Edit/5
+        // GET: TeacherSchedules/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.TeacherSchedule == null)
@@ -74,22 +74,22 @@ namespace crud.Controllers
                 return NotFound();
             }
 
-            var teachersSchedule = await _context.TeacherSchedule.FindAsync(id);
-            if (teachersSchedule == null)
+            var teacherSchedule = await _context.TeacherSchedule.FindAsync(id);
+            if (teacherSchedule == null)
             {
                 return NotFound();
             }
-            return View(teachersSchedule);
+            return View(teacherSchedule);
         }
 
-        // POST: TeachersSchedules/Edit/5
+        // POST: TeacherSchedules/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TeacherId,GradeId,SubjectId,ClassroomId,Schedule")] TeachersSchedule teachersSchedule)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TeacherId,GradeId,SubjectId,ClassroomId,Schedule")] TeacherSchedule teacherSchedule)
         {
-            if (id != teachersSchedule.Id)
+            if (id != teacherSchedule.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace crud.Controllers
             {
                 try
                 {
-                    _context.Update(teachersSchedule);
+                    _context.Update(teacherSchedule);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TeachersScheduleExists(teachersSchedule.Id))
+                    if (!TeacherScheduleExists(teacherSchedule.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +114,10 @@ namespace crud.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(teachersSchedule);
+            return View(teacherSchedule);
         }
 
-        // GET: TeachersSchedules/Delete/5
+        // GET: TeacherSchedules/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.TeacherSchedule == null)
@@ -125,17 +125,17 @@ namespace crud.Controllers
                 return NotFound();
             }
 
-            var teachersSchedule = await _context.TeacherSchedule
+            var teacherSchedule = await _context.TeacherSchedule
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (teachersSchedule == null)
+            if (teacherSchedule == null)
             {
                 return NotFound();
             }
 
-            return View(teachersSchedule);
+            return View(teacherSchedule);
         }
 
-        // POST: TeachersSchedules/Delete/5
+        // POST: TeacherSchedules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -144,17 +144,17 @@ namespace crud.Controllers
             {
                 return Problem("Entity set 'StudentsContext.TeacherSchedule'  is null.");
             }
-            var teachersSchedule = await _context.TeacherSchedule.FindAsync(id);
-            if (teachersSchedule != null)
+            var teacherSchedule = await _context.TeacherSchedule.FindAsync(id);
+            if (teacherSchedule != null)
             {
-                _context.TeacherSchedule.Remove(teachersSchedule);
+                _context.TeacherSchedule.Remove(teacherSchedule);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeachersScheduleExists(int id)
+        private bool TeacherScheduleExists(int id)
         {
           return (_context.TeacherSchedule?.Any(e => e.Id == id)).GetValueOrDefault();
         }

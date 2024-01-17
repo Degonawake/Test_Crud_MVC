@@ -1,45 +1,44 @@
-﻿@model crud.Models.Entities.TeachersSchedule
+﻿@model crud.Models.Entities.TeacherSchedule
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create new teacher Schedule</h1>
 
-<h4>TeachersSchedule</h4>
+<h4>TeacherSchedule</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="TeacherId" class="control-label"></label>
+                <label asp-for="TeacherId" class="control-label">Teacher ID</label>
                 <input asp-for="TeacherId" class="form-control" />
                 <span asp-validation-for="TeacherId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GradeId" class="control-label"></label>
+                <label asp-for="GradeId" class="control-label">Grade Id</label>
                 <input asp-for="GradeId" class="form-control" />
                 <span asp-validation-for="GradeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SubjectId" class="control-label"></label>
+                <label asp-for="SubjectId" class="control-label">Subject Id</label>
                 <input asp-for="SubjectId" class="form-control" />
                 <span asp-validation-for="SubjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ClassroomId" class="control-label"></label>
+                <label asp-for="ClassroomId" class="control-label">Calssroom Id</label>
                 <input asp-for="ClassroomId" class="form-control" />
                 <span asp-validation-for="ClassroomId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Schedule" class="control-label"></label>
+                <label asp-for="Schedule" class="control-label">Schedule</label>
                 <input asp-for="Schedule" class="form-control" />
                 <span asp-validation-for="Schedule" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
